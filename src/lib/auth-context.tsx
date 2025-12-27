@@ -35,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (username === 'admin' && password === 'admin') {
             localStorage.setItem('pos_authenticated', 'true');
             setIsAuthenticated(true);
+            router.push('/'); // Explicit redirect
             return true;
         }
         return false;
