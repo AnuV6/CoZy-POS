@@ -30,20 +30,20 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] font-[family-name:var(--font-sans)]">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] font-[family-name:var(--font-sans)] p-4">
             {/* COSYPOS Logo */}
-            <h1 className="text-center mb-12 text-[var(--color-primary)] text-[55px] font-semibold leading-[82px] tracking-[0.05em]">
+            <h1 className="text-center mb-8 md:mb-12 text-[var(--color-primary)] text-[40px] md:text-[55px] font-semibold leading-tight tracking-[0.05em]">
                 COSYPOS
             </h1>
 
             {/* Login Card */}
-            <div className="bg-[var(--color-card)] rounded-[50px] p-[45px_80px_50px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] w-[580px] flex flex-col items-center">
+            <div className="bg-[var(--color-card)] rounded-[30px] md:rounded-[50px] p-[30px] md:p-[45px_80px_50px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] w-full max-w-[580px] flex flex-col items-center">
                 {/* Title */}
-                <h2 className="text-center mb-2 text-[var(--color-foreground)] text-[45px] font-medium leading-[68px]">
+                <h2 className="text-center mb-2 text-[var(--color-foreground)] text-[32px] md:text-[45px] font-medium leading-tight">
                     Login!
                 </h2>
                 {/* Subtitle */}
-                <p className="text-center mb-10 text-[var(--color-foreground)] text-[16px] font-normal leading-[24px] max-w-[380px]">
+                <p className="text-center mb-8 md:mb-10 text-[var(--color-foreground)] text-[14px] md:text-[16px] font-normal leading-normal max-w-[380px]">
                     Please enter your credentials below to continue
                 </p>
 

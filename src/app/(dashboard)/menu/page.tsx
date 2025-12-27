@@ -72,7 +72,7 @@ export default function MenuPage() {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-7 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                     {mockCategories.map((cat: any) => {
                         const Icon = iconMap[cat.icon];
                         const isActive = activeCategory === cat.name;
@@ -113,14 +113,14 @@ export default function MenuPage() {
             <div className="mb-6">
                 <h2 className="text-[var(--color-foreground)] font-medium text-[25px] mb-6">Special menu all items</h2>
 
-                <div className="flex justify-between items-center">
-                    <div className="flex gap-8">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div className="flex gap-4 md:gap-8 overflow-x-auto pb-2 w-full md:w-auto">
                         {['Normal Menu', 'Special Deals', 'New Year Special', 'Deserts and Drinks'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`
-                                    pb-2 text-base font-medium transition-colors relative
+                                    pb-2 text-base font-medium transition-colors relative whitespace-nowrap
                                     ${activeTab === tab ? 'text-[var(--color-primary)]' : 'text-[var(--color-foreground)] hover:text-[var(--color-primary)]'}
                                 `}
                             >
@@ -132,67 +132,101 @@ export default function MenuPage() {
                         ))}
                     </div>
 
-                    <button className="bg-[var(--color-primary)] text-[var(--color-text-dark)] px-6 py-2 rounded-lg font-medium text-sm flex items-center gap-2">
+                    <button className="bg-[var(--color-primary)] text-[var(--color-text-dark)] px-6 py-2 rounded-lg font-medium text-sm flex items-center gap-2 whitespace-nowrap">
                         <Plus size={16} />
                         Add Menu Item
                     </button>
                 </div>
             </div>
 
-            {/* Menu Items Table */}
+            {/* Menu Items Table (Desktop) & Cards (Mobile) */}
             <div className="bg-[var(--color-card)] rounded-[10px] overflow-hidden">
-                <table className="w-full">
-                    <thead>
-                        <tr className="border-b border-[#3D4142]">
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm w-[60px]">
-                                <div className="w-3 h-3 border border-white rounded-[2px]" />
-                            </th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Product</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Item ID</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Stock</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Category</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Price</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Availability</th>
-                            <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredItems.map((item, index) => (
-                            <tr key={item.id} className="border-b border-[#3D4142]/50 hover:bg-[var(--color-card-hover)] transition-colors group">
-                                <td className="py-4 px-6">
-                                    <div className="w-3 h-3 border border-white rounded-[2px]" />
-                                </td>
-                                <td className="py-4 px-6">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-[5px] overflow-hidden flex-shrink-0">
-                                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                                        </div>
-                                        <span className="text-[var(--color-foreground)] text-sm">{item.name}</span>
-                                    </div>
-                                </td>
-                                <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.itemId}</td>
-                                <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.stock} items</td>
-                                <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.category}</td>
-                                <td className="py-4 px-6 text-[var(--color-foreground)] text-sm font-medium">${item.price.toFixed(2)}</td>
-                                <td className="py-4 px-6">
-                                    <span className={`text-sm ${item.availability === 'In Stock' ? 'text-[var(--color-primary)]' : 'text-[var(--color-danger)]'}`}>
+                {/* Mobile Cards View */}
+                <div className="md:hidden grid grid-cols-1 gap-4 p-4">
+                    {filteredItems.map((item) => (
+                        <div key={item.id} className="bg-[var(--color-card-hover)] p-4 rounded-lg flex gap-4">
+                            <div className="w-20 h-20 rounded-[5px] overflow-hidden flex-shrink-0">
+                                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="flex justify-between items-start mb-1">
+                                    <h3 className="text-[var(--color-foreground)] font-medium text-base truncate">{item.name}</h3>
+                                    <span className="text-[var(--color-primary)] font-bold">${item.price.toFixed(2)}</span>
+                                </div>
+                                <p className="text-[var(--color-text-muted)] text-sm mb-2">{item.category} • {item.stock} in stock</p>
+                                <div className="flex justify-between items-center">
+                                    <span className={`text-xs px-2 py-1 rounded-full bg-opacity-20 ${item.availability === 'In Stock' ? 'text-[var(--color-primary)] bg-[var(--color-primary)]' : 'text-[var(--color-danger)] bg-[var(--color-danger)]'}`}>
                                         {item.availability}
                                     </span>
-                                </td>
-                                <td className="py-4 px-6">
-                                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button className="w-8 h-8 flex items-center justify-center text-[var(--color-foreground)] hover:text-[var(--color-primary)]">
-                                            <Edit2 size={16} />
+                                    <div className="flex gap-2">
+                                        <button className="p-2 bg-[var(--color-card)] rounded-full text-[var(--color-foreground)]">
+                                            <Edit2 size={14} />
                                         </button>
-                                        <button className="w-8 h-8 flex items-center justify-center text-[var(--color-danger)] hover:text-[#ff4d4d]">
-                                            <Trash2 size={16} />
+                                        <button className="p-2 bg-[var(--color-card)] rounded-full text-[var(--color-danger)]">
+                                            <Trash2 size={14} />
                                         </button>
                                     </div>
-                                </td>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full min-w-[800px]">
+                        <thead>
+                            <tr className="border-b border-[#3D4142]">
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm w-[60px]">
+                                    <div className="w-3 h-3 border border-white rounded-[2px]" />
+                                </th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Product</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Item ID</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Stock</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Category</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Price</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Availability</th>
+                                <th className="py-4 px-6 text-left text-[var(--color-foreground)] font-medium text-sm">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredItems.map((item, index) => (
+                                <tr key={item.id} className="border-b border-[#3D4142]/50 hover:bg-[var(--color-card-hover)] transition-colors group">
+                                    <td className="py-4 px-6">
+                                        <div className="w-3 h-3 border border-white rounded-[2px]" />
+                                    </td>
+                                    <td className="py-4 px-6">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-[5px] overflow-hidden flex-shrink-0">
+                                                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                            </div>
+                                            <span className="text-[var(--color-foreground)] text-sm">{item.name}</span>
+                                        </div>
+                                    </td>
+                                    <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.itemId}</td>
+                                    <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.stock} items</td>
+                                    <td className="py-4 px-6 text-[var(--color-foreground)] text-sm opacity-80">{item.category}</td>
+                                    <td className="py-4 px-6 text-[var(--color-foreground)] text-sm font-medium">${item.price.toFixed(2)}</td>
+                                    <td className="py-4 px-6">
+                                        <span className={`text-sm ${item.availability === 'In Stock' ? 'text-[var(--color-primary)]' : 'text-[var(--color-danger)]'}`}>
+                                            {item.availability}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 px-6">
+                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button className="w-8 h-8 flex items-center justify-center text-[var(--color-foreground)] hover:text-[var(--color-primary)]">
+                                                <Edit2 size={16} />
+                                            </button>
+                                            <button className="w-8 h-8 flex items-center justify-center text-[var(--color-danger)] hover:text-[#ff4d4d]">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

@@ -38,6 +38,7 @@ export default function OrdersPage() {
     const { items: cartItems, addToCart, removeFromCart, updateQuantity } = useCart();
     const [activeCategory, setActiveCategory] = useState('all');
     const [selectedTableId, setSelectedTableId] = useState('01');
+    const [activeView, setActiveView] = useState<'menu' | 'cart'>('menu'); // Mobile view state
 
     const filteredItems = activeCategory === 'all'
         ? mockMenuItems
@@ -74,13 +75,32 @@ export default function OrdersPage() {
 
         console.log('Order submitted:', orderData);
         alert(`Order submitted to kitchen!\nTable ${selectedTableId}\nTotal: $${total.toFixed(2)}`);
-        // In a real app, this would send to a backend API
     };
 
     return (
-        <div className="h-full flex gap-6 relative">
+        <div className="h-full flex flex-col md:flex-row gap-6 relative">
+            {/* Mobile View Toggle (Floating) */}
+            <div className="md:hidden fixed bottom-4 right-4 z-50">
+                {activeView === 'menu' ? (
+                    <button
+                        onClick={() => setActiveView('cart')}
+                        className="bg-[var(--color-primary)] text-[var(--color-text-dark)] p-4 rounded-full shadow-lg flex items-center gap-2"
+                    >
+                        <span className="font-bold">{cartItems.length}</span>
+                        <span>View Cart</span>
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => setActiveView('menu')}
+                        className="bg-[var(--color-card)] text-[var(--color-foreground)] p-4 rounded-full shadow-lg border border-[var(--color-primary)]"
+                    >
+                        Back to Menu
+                    </button>
+                )}
+            </div>
+
             {/* Left Side - Menu Selection */}
-            <div className="flex-1 flex flex-col min-w-0">
+            <div className={`flex-1 flex flex-col min-w-0 ${activeView === 'cart' ? 'hidden md:flex' : 'flex'}`}>
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-4">
@@ -100,7 +120,7 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-3 gap-5 mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-8">
                     {mockCategories.filter(c => c.id !== 'all').map((category) => {
                         const Icon = iconMap[category.icon] || Pizza;
                         return (
@@ -128,8 +148,8 @@ export default function OrdersPage() {
                 <div className="border-b border-[#5E5E5E] mb-6 opacity-30"></div>
 
                 {/* Items Grid */}
-                <div className="overflow-y-auto flex-1 pr-2">
-                    <div className="grid grid-cols-3 gap-5">
+                <div className="overflow-y-auto flex-1 pr-2 pb-20 md:pb-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {filteredItems.map((item) => {
                             const cartItem = cartItems.find(ci => ci.id === String(item.id));
                             const isSelected = !!cartItem;
@@ -193,7 +213,7 @@ export default function OrdersPage() {
             </div>
 
             {/* Right Side - Order Summary */}
-            <div className="w-[424px] bg-[var(--color-card-hover)] rounded-t-[10px] flex flex-col h-full">
+            <div className={`w-full md:w-[424px] bg-[var(--color-card-hover)] rounded-t-[10px] flex-col h-full ${activeView === 'menu' ? 'hidden md:flex' : 'flex'}`}>
                 {/* Order Header */}
                 <div className="p-6 pb-0 flex justify-between items-start">
                     <div>
@@ -247,7 +267,7 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Footer Section */}
-                <div className="bg-[var(--color-card-hover)] p-5 pt-0">
+                <div className="bg-[var(--color-card-hover)] p-5 pt-0 pb-20 md:pb-5">
                     {/* Totals */}
                     <div className="space-y-4 mb-6">
                         <div className="flex justify-between text-[var(--color-foreground)] text-sm">
