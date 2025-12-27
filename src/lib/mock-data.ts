@@ -7,11 +7,11 @@ export const mockDashboardStats = {
 };
 
 export const mockPopularDishes = [
-  { id: 1, name: 'Spicy Noodles', orders: 250, price: 12.99, image: '/dishes/noodles.jpg', inStock: true },
-  { id: 2, name: 'Grilled Salmon', orders: 180, price: 24.99, image: '/dishes/salmon.jpg', inStock: true },
-  { id: 3, name: 'Caesar Salad', orders: 165, price: 8.99, image: '/dishes/salad.jpg', inStock: false },
-  { id: 4, name: 'Beef Steak', orders: 142, price: 32.99, image: '/dishes/steak.jpg', inStock: true },
-  { id: 5, name: 'Mushroom Risotto', orders: 128, price: 18.99, image: '/dishes/risotto.jpg', inStock: true },
+  { id: 1, name: 'Spicy Noodles', orders: 250, price: 12.99, image: '/food-item.png', inStock: true },
+  { id: 2, name: 'Grilled Salmon', orders: 180, price: 24.99, image: '/food-item.png', inStock: true },
+  { id: 3, name: 'Caesar Salad', orders: 165, price: 8.99, image: '/food-item.png', inStock: false },
+  { id: 4, name: 'Beef Steak', orders: 142, price: 32.99, image: '/food-item.png', inStock: true },
+  { id: 5, name: 'Mushroom Risotto', orders: 128, price: 18.99, image: '/food-item.png', inStock: true },
 ];
 
 export const mockOrders = [
@@ -65,17 +65,17 @@ export const mockOrders = [
 ];
 
 export const mockMenuItems = [
-  { id: 1, itemId: '#22314644', name: 'Chicken Parmesan', category: 'Chicken', price: 55.00, stock: 119, image: '/dishes/chicken-parm.jpg', availability: 'In Stock' },
-  { id: 2, itemId: '#22314645', name: 'Roasted Chicken', category: 'Chicken', price: 55.00, stock: 45, image: '/dishes/chicken.jpg', availability: 'In Stock' },
-  { id: 3, itemId: '#22314646', name: 'Grilled Salmon', category: 'Seafood', price: 24.99, stock: 22, image: '/dishes/salmon.jpg', availability: 'In Stock' },
-  { id: 4, itemId: '#22314647', name: 'Caesar Salad', category: 'Appetizers', price: 8.99, stock: 0, image: '/dishes/salad.jpg', availability: 'Out of Stock' },
-  { id: 5, itemId: '#22314648', name: 'Beef Steak', category: 'Main Course', price: 32.99, stock: 15, image: '/dishes/steak.jpg', availability: 'In Stock' },
-  { id: 6, itemId: '#22314649', name: 'Mushroom Risotto', category: 'Main Course', price: 18.99, stock: 30, image: '/dishes/risotto.jpg', availability: 'In Stock' },
-  { id: 7, itemId: '#22314650', name: 'Tom Yum Soup', category: 'Appetizers', price: 9.99, stock: 28, image: '/dishes/soup.jpg', availability: 'In Stock' },
-  { id: 8, itemId: '#22314651', name: 'Chocolate Cake', category: 'Bakery', price: 7.99, stock: 12, image: '/dishes/cake.jpg', availability: 'In Stock' },
-  { id: 9, itemId: '#22314652', name: 'Mojito', category: 'Beverage', price: 6.99, stock: 50, image: '/dishes/mojito.jpg', availability: 'In Stock' },
-  { id: 10, itemId: '#22314653', name: 'Pepperoni Pizza', category: 'Pizza', price: 14.99, stock: 20, image: '/dishes/pizza.jpg', availability: 'In Stock' },
-  { id: 11, itemId: '#22314654', name: 'Cheese Burger', category: 'Burger', price: 10.99, stock: 15, image: '/dishes/burger.jpg', availability: 'In Stock' },
+  { id: 1, itemId: '#22314644', name: 'Chicken Parmesan', category: 'Chicken', price: 55.00, stock: 119, image: '/food-item.png', availability: 'In Stock' },
+  { id: 2, itemId: '#22314645', name: 'Roasted Chicken', category: 'Chicken', price: 55.00, stock: 45, image: '/food-item.png', availability: 'In Stock' },
+  { id: 3, itemId: '#22314646', name: 'Grilled Salmon', category: 'Seafood', price: 24.99, stock: 22, image: '/food-item.png', availability: 'In Stock' },
+  { id: 4, itemId: '#22314647', name: 'Caesar Salad', category: 'Appetizers', price: 8.99, stock: 0, image: '/food-item.png', availability: 'Out of Stock' },
+  { id: 5, itemId: '#22314648', name: 'Beef Steak', category: 'Main Course', price: 32.99, stock: 15, image: '/food-item.png', availability: 'In Stock' },
+  { id: 6, itemId: '#22314649', name: 'Mushroom Risotto', category: 'Main Course', price: 18.99, stock: 30, image: '/food-item.png', availability: 'In Stock' },
+  { id: 7, itemId: '#22314650', name: 'Tom Yum Soup', category: 'Appetizers', price: 9.99, stock: 28, image: '/food-item.png', availability: 'In Stock' },
+  { id: 8, itemId: '#22314651', name: 'Chocolate Cake', category: 'Bakery', price: 7.99, stock: 12, image: '/food-item.png', availability: 'In Stock' },
+  { id: 9, itemId: '#22314652', name: 'Mojito', category: 'Beverage', price: 6.99, stock: 50, image: '/food-item.png', availability: 'In Stock' },
+  { id: 10, itemId: '#22314653', name: 'Pepperoni Pizza', category: 'Pizza', price: 14.99, stock: 20, image: '/food-item.png', availability: 'In Stock' },
+  { id: 11, itemId: '#22314654', name: 'Cheese Burger', category: 'Burger', price: 10.99, stock: 15, image: '/food-item.png', availability: 'In Stock' },
 ];
 
 export const mockCategories = [
@@ -100,7 +100,7 @@ export const mockStaff = [
     salary: '$2200.00',
     timings: '9am to 6pm',
     status: 'active',
-    avatar: '/avatars/watson.jpg'
+    avatar: '/admin-avatar.png'
   },
   {
     id: 2,

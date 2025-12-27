@@ -11,6 +11,18 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
+// Theme Colors for Recharts
+const THEME = {
+  primary: '#FAC1D9',
+  white: '#FFFFFF',
+  secondary: '#50CD89',
+  secondaryLight: '#C2E9DD',
+  card: '#292C2D',
+  grid: '#444444',
+  danger: '#F60000',
+  placeholder: '#777979',
+};
+
 // Mock Data
 const overviewData = [
   { name: 'JAN', sales: 2000, revenue: 2400 },
@@ -28,35 +40,32 @@ const overviewData = [
 ];
 
 const popularDishes = [
-  { id: 1, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person' },
-  { id: 2, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person' },
-  { id: 3, name: 'Chicken Parmesan', price: 55.00, status: 'Out of stock', serving: '01 person' },
-  { id: 4, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person' },
+  { id: 1, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person', image: '/food-item.png' },
+  { id: 2, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person', image: '/food-item.png' },
+  { id: 3, name: 'Chicken Parmesan', price: 55.00, status: 'Out of stock', serving: '01 person', image: '/food-item.png' },
+  { id: 4, name: 'Chicken Parmesan', price: 55.00, status: 'In Stock', serving: '01 person', image: '/food-item.png' },
 ];
 
 const recentOrders = [
-  { id: 1, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'In Stock' },
-  { id: 2, name: 'Chicken Parmesan', price: 110.00, quantity: 2, status: 'In Stock' },
-  { id: 3, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'Out of stock' },
-  { id: 4, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'In Stock' },
+  { id: 1, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'In Stock', image: '/food-item.png' },
+  { id: 2, name: 'Chicken Parmesan', price: 110.00, quantity: 2, status: 'In Stock', image: '/food-item.png' },
+  { id: 3, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'Out of stock', image: '/food-item.png' },
+  { id: 4, name: 'Chicken Parmesan', price: 55.00, quantity: 1, status: 'In Stock', image: '/food-item.png' },
 ];
 
 // Reusable Components
-const StatCard = ({ title, value, subtitle, icon, barsColor = '#50CD89', isRevenue = false }: any) => (
-  <div
-    className="rounded-[10px] p-6 relative overflow-hidden"
-    style={{ background: 'var(--figma-card)', height: '166px' }}
-  >
+const StatCard = ({ title, value, subtitle, icon, barsColor = THEME.secondary, isRevenue = false }: any) => (
+  <div className="rounded-[10px] p-6 relative overflow-hidden h-[166px] bg-[var(--color-card)]">
     <div className="flex justify-between items-start mb-2">
-      <h3 style={{ color: 'var(--figma-white)', fontWeight: 300, fontSize: 16, fontFamily: 'Poppins' }}>{title}</h3>
-      <div className="w-[36px] h-[36px] rounded-full flex items-center justify-center" style={{ background: 'var(--figma-pink)' }}>
+      <h3 className="text-[var(--color-foreground)] font-light text-[16px] font-[family-name:var(--font-sans)]">{title}</h3>
+      <div className="w-[36px] h-[36px] rounded-full flex items-center justify-center bg-[var(--color-primary)]">
         {icon}
       </div>
     </div>
 
-    <div style={{ color: 'var(--figma-white)', fontWeight: 500, fontSize: 25, fontFamily: 'Poppins', marginBottom: 32 }}>{value}</div>
+    <div className="text-[var(--color-foreground)] font-medium text-[25px] font-[family-name:var(--font-sans)] mb-8">{value}</div>
 
-    <div style={{ color: 'var(--figma-placeholder)', fontWeight: 300, fontSize: 16, fontFamily: 'Poppins', position: 'absolute', bottom: 16, left: 24 }}>{subtitle}</div>
+    <div className="text-[var(--color-text-muted)] font-light text-[16px] font-[family-name:var(--font-sans)] absolute bottom-4 left-6">{subtitle}</div>
 
     {/* Custom Bar Chart Visual */}
     <div className="flex gap-[6px] items-end absolute bottom-0 right-4 h-[52px]">
@@ -66,7 +75,7 @@ const StatCard = ({ title, value, subtitle, icon, barsColor = '#50CD89', isReven
           className="w-[12px] rounded-t-[3px]"
           style={{
             height: `${h}%`,
-            backgroundColor: isRevenue ? '#C2E9DD' : '#50CD89',
+            backgroundColor: isRevenue ? THEME.secondaryLight : barsColor,
             opacity: isRevenue && i % 2 === 0 ? 0.7 : 1
           }}
         />
@@ -76,34 +85,36 @@ const StatCard = ({ title, value, subtitle, icon, barsColor = '#50CD89', isReven
 );
 
 const DishList = ({ title, items, isOrders = false }: any) => (
-  <div className="rounded-[10px] p-6 h-[466px] relative flex flex-col" style={{ background: 'var(--figma-card)' }}>
+  <div className="rounded-[10px] p-6 h-[466px] relative flex flex-col bg-[var(--color-card)]">
     <div className="flex justify-between items-center mb-6">
-      <h2 style={{ color: 'var(--figma-white)', fontWeight: 500, fontSize: 25, fontFamily: 'Poppins' }}>{title}</h2>
-      <button style={{ color: 'var(--figma-pink)', textDecoration: 'underline', fontSize: 16, fontFamily: 'Poppins', fontWeight: 400 }}>See All</button>
+      <h2 className="text-[var(--color-foreground)] font-medium text-[25px] font-[family-name:var(--font-sans)]">{title}</h2>
+      <button className="text-[var(--color-primary)] underline text-[16px] font-normal font-[family-name:var(--font-sans)]">See All</button>
     </div>
 
     <div className="flex-1 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
       {items.map((item: any, i: number) => (
-        <div key={i} className="rounded-[8px] p-2 flex gap-4 items-center" style={{ background: 'var(--figma-input)' }}>
-          {/* Image Placeholder */}
-          <div className="w-[89px] h-[67px] bg-gray-600 rounded-[5px] flex-shrink-0" />
+        <div key={i} className="rounded-[8px] p-2 flex gap-4 items-center bg-[var(--color-card-hover)]">
+          {/* Image */}
+          <div className="w-[89px] h-[67px] rounded-[5px] flex-shrink-0 overflow-hidden relative">
+            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+          </div>
 
           <div className="flex-1">
             <div className="flex justify-between items-start">
-              <h3 style={{ color: 'var(--figma-white)', fontWeight: 500, fontSize: 16, fontFamily: 'Poppins' }}>{item.name}</h3>
-              <span style={{ color: item.status === 'Out of stock' ? '#F60000' : 'var(--figma-pink)', fontSize: 16, fontFamily: 'Poppins', fontWeight: 400 }}>
+              <h3 className="text-[var(--color-foreground)] font-medium text-[16px] font-[family-name:var(--font-sans)]">{item.name}</h3>
+              <span className={`text-[16px] font-normal font-[family-name:var(--font-sans)] ${item.status === 'Out of stock' ? 'text-[var(--color-danger)]' : 'text-[var(--color-primary)]'}`}>
                 {item.status === 'Out of stock' ? 'Out of stock' : 'In Stock'}
               </span>
             </div>
 
             <div className="flex justify-between items-end mt-1">
-              <p style={{ color: 'var(--figma-placeholder)', fontSize: 14, fontFamily: 'Poppins', fontWeight: 400 }}>
+              <p className="text-[var(--color-text-muted)] text-[14px] font-normal font-[family-name:var(--font-sans)]">
                 {isOrders
                   ? `Order : x${item.quantity} $${(item.price / item.quantity).toFixed(2)}`
                   : `Serving : ${item.serving}`
                 }
               </p>
-              <span style={{ color: 'var(--figma-white)', fontSize: 14, fontFamily: 'Poppins', fontWeight: 400 }}>${item.price.toFixed(2)}</span>
+              <span className="text-[var(--color-foreground)] text-[14px] font-normal font-[family-name:var(--font-sans)]">${item.price.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -117,17 +128,19 @@ export default function Dashboard() {
     <div className="w-full max-w-[1440px] relative">
       {/* Header */}
       <div className="flex justify-between items-center mb-8 pt-4">
-        <h1 className="text-white font-medium text-[25px]">Dashboard</h1>
+        <h1 className="text-[var(--color-foreground)] font-medium text-[25px]">Dashboard</h1>
 
         <div className="flex gap-4 items-center">
-          <div className="w-10 h-10 rounded-xl bg-[#292C2D] flex items-center justify-center text-[#FAC1D9] relative">
+          <div className="w-10 h-10 rounded-xl bg-[var(--color-card)] flex items-center justify-center text-[var(--color-primary)] relative">
             <Bell size={20} />
-            <span className="absolute top-2 right-2 w-2 h-2 bg-[#FAC1D9] rounded-full"></span>
+            <span className="absolute top-2 right-2 w-2 h-2 bg-[var(--color-primary)] rounded-full"></span>
           </div>
 
-          <div className="flex items-center gap-3 bg-[#292C2D] pl-1 pr-3 py-1 rounded-xl">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FAC1D9] to-[#9b51e0]" />
-            <span className="text-white text-sm font-medium">Admin</span>
+          <div className="flex items-center gap-3 bg-[var(--color-card)] pl-1 pr-3 py-1 rounded-xl">
+            <div className="w-8 h-8 rounded-lg overflow-hidden">
+              <img src="/admin-avatar.png" alt="Admin" className="w-full h-full object-cover" />
+            </div>
+            <span className="text-[var(--color-foreground)] text-sm font-medium">Admin</span>
             <ChevronDown size={14} className="text-gray-400" />
           </div>
         </div>
@@ -146,7 +159,7 @@ export default function Dashboard() {
           value="$55k"
           subtitle="1 Jan - 1 Feb"
           icon={<span className="text-[#333333] font-bold">R</span>}
-          barsColor="#C2E9DD"
+          barsColor={THEME.secondaryLight}
           isRevenue={true}
         />
         <StatCard
@@ -164,29 +177,29 @@ export default function Dashboard() {
       </div>
 
       {/* Overview Chart */}
-      <div className="bg-[#292C2D] rounded-[10px] p-6 h-[514px]">
+      <div className="bg-[var(--color-card)] rounded-[10px] p-6 h-[514px]">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-8">
-            <h2 className="text-white font-medium text-[25px]">Overview</h2>
+            <h2 className="text-[var(--color-foreground)] font-medium text-[25px]">Overview</h2>
             <div className="flex gap-4 items-center">
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#FAC1D9]"></span>
-                <span className="text-white text-sm">Sales</span>
+                <span className="w-3 h-3 rounded-full bg-[var(--color-primary)]"></span>
+                <span className="text-[var(--color-foreground)] text-sm">Sales</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-white"></span>
-                <span className="text-white text-sm">Revenue</span>
+                <span className="w-3 h-3 rounded-full bg-[var(--color-foreground)]"></span>
+                <span className="text-[var(--color-foreground)] text-sm">Revenue</span>
               </div>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <div className="bg-[#FAC1D9] rounded-[8px] flex p-1">
-              <button className="px-4 py-1 bg-white text-[#333333] rounded-[6px] text-sm font-medium">Monthly</button>
-              <button className="px-4 py-1 text-[#333333] text-sm">Daily</button>
-              <button className="px-4 py-1 text-[#333333] text-sm">Weekly</button>
+            <div className="bg-[var(--color-primary)] rounded-[8px] flex p-1">
+              <button className="px-4 py-1 bg-[var(--color-foreground)] text-[var(--color-text-dark)] rounded-[6px] text-sm font-medium">Monthly</button>
+              <button className="px-4 py-1 text-[var(--color-text-dark)] text-sm">Daily</button>
+              <button className="px-4 py-1 text-[var(--color-text-dark)] text-sm">Weekly</button>
             </div>
-            <button className="px-4 py-2 border border-[#FAC1D9] rounded-[8px] text-[#FAC1D9] text-sm flex items-center gap-2">
+            <button className="px-4 py-2 border border-[var(--color-primary)] rounded-[8px] text-[var(--color-primary)] text-sm flex items-center gap-2">
               Export
             </button>
           </div>
@@ -197,40 +210,40 @@ export default function Dashboard() {
             <AreaChart data={overviewData}>
               <defs>
                 <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#FAC1D9" stopOpacity={0.1} />
-                  <stop offset="95%" stopColor="#FAC1D9" stopOpacity={0} />
+                  <stop offset="5%" stopColor={THEME.primary} stopOpacity={0.1} />
+                  <stop offset="95%" stopColor={THEME.primary} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} stroke="#444444" strokeDasharray="0" />
+              <CartesianGrid vertical={false} stroke={THEME.grid} strokeDasharray="0" />
               <XAxis
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: '#FFFFFF', fontSize: 12 }}
+                tick={{ fill: THEME.white, fontSize: 12 }}
                 dy={10}
               />
               <YAxis
                 orientation="right"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: '#FFFFFF', fontSize: 12 }}
+                tick={{ fill: THEME.white, fontSize: 12 }}
                 tickFormatter={(value) => value === 0 ? '0' : `${value / 1000}k`}
               />
               <Tooltip
-                contentStyle={{ backgroundColor: '#3D4142', border: 'none', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: THEME.card, border: 'none', borderRadius: '8px' }}
                 itemStyle={{ color: '#fff' }}
               />
               <Area
                 type="monotone"
                 dataKey="sales"
-                stroke="#FAC1D9"
+                stroke={THEME.primary}
                 strokeWidth={3}
                 fill="none"
               />
               <Area
                 type="monotone"
                 dataKey="revenue"
-                stroke="#FFFFFF"
+                stroke={THEME.white}
                 strokeWidth={3}
                 fill="none"
               />

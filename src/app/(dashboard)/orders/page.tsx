@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import {
-    Search,
     ChevronDown,
     Edit2,
     Plus,
@@ -16,7 +15,6 @@ import {
     QrCode,
     X,
 } from 'lucide-react';
-import Image from 'next/image';
 import { mockMenuItems, mockCategories } from '@/lib/mock-data';
 import { useCart } from '@/lib/cart-context';
 
@@ -86,15 +84,18 @@ export default function OrdersPage() {
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-[#292C2D] flex items-center justify-center transform rotate-90">
-                            <ChevronDown className="text-white" size={20} />
+                        <div className="w-10 h-10 rounded-full bg-[var(--color-card)] flex items-center justify-center transform rotate-90">
+                            <ChevronDown className="text-[var(--color-foreground)]" size={20} />
                         </div>
-                        <h1 className="text-white font-medium text-[25px]">Orders</h1>
+                        <h1 className="text-[var(--color-foreground)] font-medium text-[25px]">Orders</h1>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className="bg-[#FAC1D9] w-2.5 h-2.5 rounded-full"></div>
-                        <span className="text-[#333333] text-[6px]">0{cartItems.length}</span>
+                        <div className="w-8 h-8 rounded-lg overflow-hidden">
+                            <img src="/admin-avatar.png" alt="Admin" className="w-full h-full object-cover" />
+                        </div>
+                        <span className="text-[var(--color-foreground)] text-sm font-medium">Admin</span>
+                        <ChevronDown size={14} className="text-gray-400" />
                     </div>
                 </div>
 
@@ -108,7 +109,9 @@ export default function OrdersPage() {
                                 onClick={() => setActiveCategory(category.id)}
                                 className={`
                                     h-[146px] rounded-[10px] p-4 relative flex flex-col justify-end text-left transition-all
-                                    ${activeCategory === category.id ? 'bg-[#FAC1D9] text-[#333333]' : 'bg-[#292C2D] text-white hover:bg-[#3D4142]'}
+                                    ${activeCategory === category.id
+                                        ? 'bg-[var(--color-primary)] text-[var(--color-text-dark)]'
+                                        : 'bg-[var(--color-card)] text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}
                                 `}
                             >
                                 <div className="absolute top-4 right-4">
@@ -122,7 +125,7 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Separator */}
-                <div className="border-b border-[#5E5E5E] mb-6"></div>
+                <div className="border-b border-[#5E5E5E] mb-6 opacity-30"></div>
 
                 {/* Items Grid */}
                 <div className="overflow-y-auto flex-1 pr-2">
@@ -131,48 +134,51 @@ export default function OrdersPage() {
                             const cartItem = cartItems.find(ci => ci.id === String(item.id));
                             const isSelected = !!cartItem;
                             return (
-                                <div 
-                                    key={item.id} 
+                                <div
+                                    key={item.id}
                                     onClick={() => handleAddItem(item)}
-                                    className="bg-[#292C2D] rounded-[10px] p-4 h-[146px] flex flex-col justify-between group cursor-pointer hover:bg-[#3D4142] transition-colors relative overflow-hidden"
+                                    className="bg-[var(--color-card)] rounded-[10px] p-4 h-[180px] flex flex-col justify-between group cursor-pointer hover:bg-[var(--color-card-hover)] transition-colors relative overflow-hidden"
                                 >
                                     {!isSelected ? (
                                         <>
-                                            <div>
-                                                <h3 className="text-white font-medium text-sm mb-1">{item.name}</h3>
-                                                <p className="text-[#777979] text-sm">${item.price.toFixed(2)}</p>
-                                            </div>
-                                            <div className="text-[#777979] text-sm font-light flex items-center gap-2">
-                                                <span>Order</span>
-                                                <span>&gt;</span>
-                                                <span>Kitchen</span>
+                                            <div className="flex flex-col gap-2 h-full">
+                                                <div className="w-full h-[80px] mb-2 rounded-[5px] overflow-hidden">
+                                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-[var(--color-foreground)] font-medium text-sm mb-1 truncate">{item.name}</h3>
+                                                    <p className="text-[var(--color-text-muted)] text-sm">${item.price.toFixed(2)}</p>
+                                                </div>
                                             </div>
                                         </>
                                     ) : (
-                                        <div className="absolute inset-0 bg-[#292C2D]/95 flex flex-col justify-between p-4">
-                                            <div>
-                                                <h3 className="text-white font-medium text-sm mb-1">{item.name}</h3>
-                                                <p className="text-[#777979] text-sm">${item.price.toFixed(2)}</p>
+                                        <div className="absolute inset-0 bg-[var(--color-card)] flex flex-col justify-between p-4">
+                                            <div className="w-full h-[80px] mb-2 rounded-[5px] overflow-hidden opacity-50">
+                                                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                             </div>
-                                            <div className="flex items-center gap-4 self-center">
-                                                <button 
+                                            <div>
+                                                <h3 className="text-[var(--color-foreground)] font-medium text-sm mb-1 truncate">{item.name}</h3>
+                                                <p className="text-[var(--color-text-muted)] text-sm">${item.price.toFixed(2)}</p>
+                                            </div>
+                                            <div className="flex items-center gap-4 self-center z-10 absolute bottom-4">
+                                                <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         cartItem && updateQuantity(cartItem.id, cartItem.quantity - 1);
                                                     }}
-                                                    className="w-8 h-8 rounded-full bg-[#3D4142] flex items-center justify-center text-white ring-1 ring-white hover:bg-[#4D5152]"
+                                                    className="w-8 h-8 rounded-full bg-[var(--color-card-hover)] flex items-center justify-center text-[var(--color-foreground)] ring-1 ring-[var(--color-foreground)] hover:bg-[#4D5152]"
                                                 >
                                                     <Minus size={14} />
                                                 </button>
-                                                <div className="w-6 h-6 rounded-full bg-[#F8BFD7] flex items-center justify-center text-[#333333] text-xs font-medium">
+                                                <div className="w-6 h-6 rounded-full bg-[var(--color-primary-dark)]/20 flex items-center justify-center text-[var(--color-primary)] text-xs font-medium">
                                                     {cartItem.quantity}
                                                 </div>
-                                                <button 
+                                                <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         cartItem && updateQuantity(cartItem.id, cartItem.quantity + 1);
                                                     }}
-                                                    className="w-8 h-8 rounded-full bg-[#3D4142] flex items-center justify-center text-white ring-1 ring-white hover:bg-[#4D5152]"
+                                                    className="w-8 h-8 rounded-full bg-[var(--color-card-hover)] flex items-center justify-center text-[var(--color-foreground)] ring-1 ring-[var(--color-foreground)] hover:bg-[#4D5152]"
                                                 >
                                                     <Plus size={14} />
                                                 </button>
@@ -187,12 +193,12 @@ export default function OrdersPage() {
             </div>
 
             {/* Right Side - Order Summary */}
-            <div className="w-[424px] bg-[#3D4142] rounded-t-[10px] flex flex-col h-full">
+            <div className="w-[424px] bg-[var(--color-card-hover)] rounded-t-[10px] flex flex-col h-full">
                 {/* Order Header */}
                 <div className="p-6 pb-0 flex justify-between items-start">
                     <div>
-                        <h2 className="text-white text-[25px] font-medium leading-[38px]">Table {selectedTableId}</h2>
-                        <p className="text-white text-base">Order Summary</p>
+                        <h2 className="text-[var(--color-foreground)] text-[25px] font-medium leading-[38px]">Table {selectedTableId}</h2>
+                        <p className="text-[var(--color-foreground)] text-base">Order Summary</p>
                     </div>
                     <button className="bg-white p-2 rounded-lg hover:bg-gray-100 transition-colors">
                         <Edit2 size={16} className="text-[#333333]" />
@@ -210,27 +216,27 @@ export default function OrdersPage() {
                         </div>
                     ) : (
                         cartItems.map((item) => (
-                            <div key={item.id} className="bg-[#3D4142] rounded-[10px] overflow-hidden">
+                            <div key={item.id} className="bg-[var(--color-card)] rounded-[10px] overflow-hidden">
                                 {/* Card Body */}
-                                <div className="bg-[#3D4142] p-5 rounded-[10px] relative border-b border-[#3D4142] flex items-center gap-4">
-                                    <div className="w-[26px] h-[26px] rounded-full bg-[#F6BED6] flex items-center justify-center shrink-0">
-                                        <span className="text-[#333333] text-sm font-light">{cartItems.indexOf(item) + 1}</span>
+                                <div className="p-5 rounded-[10px] relative border-b border-[var(--color-card)] flex items-center gap-4">
+                                    <div className="w-[26px] h-[26px] rounded-full bg-[var(--color-primary-dark)]/30 flex items-center justify-center shrink-0">
+                                        <span className="text-[var(--color-foreground)] text-sm font-light">{cartItems.indexOf(item) + 1}</span>
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between items-start mb-1">
-                                            <span className="text-white text-sm">{item.name}</span>
-                                            <span className="text-white text-sm">${(item.price * item.quantity).toFixed(2)}</span>
+                                            <span className="text-[var(--color-foreground)] text-sm">{item.name}</span>
+                                            <span className="text-[var(--color-foreground)] text-sm">${(item.price * item.quantity).toFixed(2)}</span>
                                         </div>
-                                        <div className="text-[#777979] text-sm flex gap-1">
+                                        <div className="text-[var(--color-text-muted)] text-sm flex gap-1">
                                             <span>x</span>
                                             <span>{item.quantity}</span>
                                         </div>
                                     </div>
                                     <button
                                         onClick={() => removeFromCart(item.id)}
-                                        className="ml-2 p-1 hover:bg-[#4D5152] rounded transition-colors"
+                                        className="ml-2 p-1 hover:bg-[var(--color-card)] rounded transition-colors"
                                     >
-                                        <X size={16} className="text-white" />
+                                        <X size={16} className="text-[var(--color-foreground)]" />
                                     </button>
                                 </div>
                             </div>
@@ -241,19 +247,19 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Footer Section */}
-                <div className="bg-[#3D4142] p-5 pt-0">
+                <div className="bg-[var(--color-card-hover)] p-5 pt-0">
                     {/* Totals */}
                     <div className="space-y-4 mb-6">
-                        <div className="flex justify-between text-white text-sm">
+                        <div className="flex justify-between text-[var(--color-foreground)] text-sm">
                             <span>Subtotal</span>
                             <span>${subtotal.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-white text-sm">
+                        <div className="flex justify-between text-[var(--color-foreground)] text-sm">
                             <span>Tax 5%</span>
                             <span>${tax.toFixed(2)}</span>
                         </div>
                         <div className="border-t border-dashed border-[#5E5E5E]"></div>
-                        <div className="flex justify-between text-white text-sm">
+                        <div className="flex justify-between text-[var(--color-foreground)] text-sm">
                             <span>Total</span>
                             <span>${total.toFixed(2)}</span>
                         </div>
@@ -261,20 +267,20 @@ export default function OrdersPage() {
 
                     {/* Payment Method */}
                     <div className="flex gap-4 mb-8">
-                        <div className="flex-1 border border-white rounded-[10px] p-4 flex flex-col items-center justify-center gap-2 bg-[#3D4142] h-[112px] relative group cursor-pointer hover:bg-[#4D5152]">
-                            <QrCode size={40} className="text-white" />
+                        <div className="flex-1 border border-[var(--color-foreground)] rounded-[10px] p-4 flex flex-col items-center justify-center gap-2 bg-[var(--color-card-hover)] h-[112px] relative group cursor-pointer hover:bg-[#4D5152]">
+                            <QrCode size={40} className="text-[var(--color-foreground)]" />
                         </div>
                         <div className="w-[176px] flex flex-col justify-center">
-                            <span className="text-white text-sm mb-1">Payment Method</span>
-                            <span className="text-white text-sm font-medium">Scan QR Code</span>
+                            <span className="text-[var(--color-foreground)] text-sm mb-1">Payment Method</span>
+                            <span className="text-[var(--color-foreground)] text-sm font-medium">Scan QR Code</span>
                         </div>
                     </div>
 
                     {/* Action Button */}
-                    <button 
+                    <button
                         onClick={handleSubmitOrder}
                         disabled={cartItems.length === 0}
-                        className="w-full bg-[#FAC1D9] text-[#333333] font-medium text-base py-3 rounded-[8px] hover:bg-[#ffb6d4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-[var(--color-primary)] text-[var(--color-text-dark)] font-medium text-base py-3 rounded-[8px] hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Send To Kitchen
                     </button>

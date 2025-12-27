@@ -30,59 +30,26 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--figma-bg)] font-[var(--figma-font)]">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] font-[family-name:var(--font-sans)]">
             {/* COSYPOS Logo */}
-            <h1
-                className="text-center mb-12"
-                style={{
-                    color: 'var(--figma-pink)',
-                    fontSize: '55px',
-                    fontWeight: 600,
-                    lineHeight: '82px',
-                    letterSpacing: '0.05em'
-                }}
-            >
+            <h1 className="text-center mb-12 text-[var(--color-primary)] text-[55px] font-semibold leading-[82px] tracking-[0.05em]">
                 COSYPOS
             </h1>
 
             {/* Login Card */}
-            <div className="figma-card w-[580px] flex flex-col items-center">
+            <div className="bg-[var(--color-card)] rounded-[50px] p-[45px_80px_50px] shadow-[0_2px_16px_rgba(0,0,0,0.04)] w-[580px] flex flex-col items-center">
                 {/* Title */}
-                <h2
-                    className="text-center mb-2"
-                    style={{
-                        color: 'var(--figma-white)',
-                        fontSize: '45px',
-                        fontWeight: 500,
-                        lineHeight: '68px'
-                    }}
-                >
+                <h2 className="text-center mb-2 text-[var(--color-foreground)] text-[45px] font-medium leading-[68px]">
                     Login!
                 </h2>
                 {/* Subtitle */}
-                <p
-                    className="text-center mb-10"
-                    style={{
-                        color: 'var(--figma-white)',
-                        fontSize: '16px',
-                        fontWeight: 400,
-                        lineHeight: '24px',
-                        maxWidth: '380px'
-                    }}
-                >
+                <p className="text-center mb-10 text-[var(--color-foreground)] text-[16px] font-normal leading-[24px] max-w-[380px]">
                     Please enter your credentials below to continue
                 </p>
 
                 {/* Error Message */}
                 {error && (
-                    <div
-                        className="w-full text-center mb-6 p-3 rounded-xl"
-                        style={{
-                            backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                            border: '1px solid rgba(255, 107, 107, 0.3)',
-                            color: '#ff6b6b'
-                        }}
-                    >
+                    <div className="w-full text-center mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
                         {error}
                     </div>
                 )}
@@ -91,7 +58,7 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className="w-full">
                     {/* Username Field */}
                     <div className="mb-8">
-                        <label className="block mb-3" htmlFor="username">
+                        <label className="block mb-3 text-[var(--color-foreground)] font-[family-name:var(--font-sans)] text-[16px] font-medium" htmlFor="username">
                             Username
                         </label>
                         <input
@@ -101,13 +68,13 @@ export default function LoginPage() {
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Enter your username"
                             required
-                            className="w-full outline-none"
+                            className="w-full outline-none bg-[var(--color-card-hover)] rounded-[10px] border-none text-[var(--color-foreground)] font-[family-name:var(--font-sans)] text-[18px] font-light p-[16px_20px] mb-[18px] placeholder:text-[var(--color-text-muted)] placeholder:opacity-100"
                         />
                     </div>
 
                     {/* Password Field */}
                     <div className="mb-8">
-                        <label className="block mb-3" htmlFor="password">
+                        <label className="block mb-3 text-[var(--color-foreground)] font-[family-name:var(--font-sans)] text-[16px] font-medium" htmlFor="password">
                             Password
                         </label>
                         <div className="relative">
@@ -118,13 +85,12 @@ export default function LoginPage() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Enter your password"
                                 required
-                                className="w-full outline-none pr-12"
+                                className="w-full outline-none bg-[var(--color-card-hover)] rounded-[10px] border-none text-[var(--color-foreground)] font-[family-name:var(--font-sans)] text-[18px] font-light p-[16px_20px] mb-[18px] pr-12 placeholder:text-[var(--color-text-muted)] placeholder:opacity-100"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2"
-                                style={{ color: '#A7A7A7' }}
+                                className="absolute right-4 top-[1.6rem] -translate-y-1/2 text-[var(--color-text-muted)]"
                                 tabIndex={-1}
                             >
                                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -135,14 +101,14 @@ export default function LoginPage() {
                     {/* Remember me & Forgot Password */}
                     <div className="flex items-center justify-between mb-10">
                         <label className="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" className="figma-checkbox" />
-                            <span style={{ color: 'var(--figma-pink)', fontSize: '18px', fontWeight: 400 }}>
+                            <input type="checkbox" className="accent-[var(--color-primary)] border border-[var(--color-primary)] rounded-[2px] w-6 h-6" />
+                            <span className="text-[var(--color-primary)] text-[18px] font-normal">
                                 Remember me
                             </span>
                         </label>
                         <Link
                             href="/auth/forgot-password"
-                            style={{ color: 'var(--figma-pink)', fontSize: '18px', fontWeight: 400, textDecoration: 'underline' }}
+                            className="text-[var(--color-primary)] text-[18px] font-normal underline decoration-[var(--color-primary)]"
                         >
                             Forgot Password?
                         </Link>
@@ -153,13 +119,10 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            style={{ width: '143px', height: '64px' }}
+                            className="w-[143px] h-[64px] bg-[var(--color-primary)] text-[var(--color-text-dark)] rounded-[10px] font-[family-name:var(--font-sans)] text-[16px] font-medium border-none cursor-pointer transition-colors duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
                         >
                             {isLoading ? (
-                                <div
-                                    className="w-5 h-5 border-2 rounded-full animate-spin"
-                                    style={{ borderColor: '#33333330', borderTopColor: '#333333' }}
-                                />
+                                <div className="w-5 h-5 border-2 border-[#33333330] border-t-[#333333] rounded-full animate-spin" />
                             ) : (
                                 'Login'
                             )}

@@ -43,24 +43,12 @@ export default function Sidebar() {
 
     return (
         <aside
-            className="fixed left-0 top-0 h-screen z-40 py-6 flex flex-col items-center"
-            style={{
-                width: '140px',
-                background: 'var(--figma-card)',
-                borderRadius: '0px 30px 30px 0px',
-            }}
+            className="fixed left-0 top-0 h-screen z-40 py-6 flex flex-col items-center bg-[var(--color-card)] rounded-r-[30px]"
+            style={{ width: '140px' }}
         >
             {/* Logo */}
             <div className="mb-8 text-center">
-                <h1
-                    style={{
-                        color: 'var(--figma-pink)',
-                        fontFamily: 'Poppins',
-                        fontSize: '20px',
-                        fontWeight: 600,
-                        letterSpacing: '0.05em',
-                    }}
-                >
+                <h1 className="text-[var(--color-primary)] font-[family-name:var(--font-sans)] text-[20px] font-semibold tracking-[0.05em]">
                     COSYPOS
                 </h1>
             </div>
@@ -74,21 +62,15 @@ export default function Sidebar() {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className={`flex flex-col items-center justify-center py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-[var(--figma-pink)]' : 'hover:bg-[#3D4142]'}`}
-                            style={{ width: '100%' }}
+                            className={`flex flex-col items-center justify-center py-3 rounded-xl transition-all duration-200 w-full ${isActive ? 'bg-[var(--color-primary)]' : 'hover:bg-[var(--color-card-hover)]'
+                                }`}
                         >
-                            <div className={`w-[30px] h-[30px] flex items-center justify-center rounded-full mb-1 ${isActive ? 'bg-white' : 'bg-white'}`}>
-                                <Icon size={16} className={isActive ? 'text-[var(--figma-pink)]' : 'text-[#292C2D]'} />
+                            <div className={`w-[30px] h-[30px] flex items-center justify-center rounded-full mb-1 ${isActive ? 'bg-white' : 'bg-white'
+                                }`}>
+                                <Icon size={16} className={isActive ? 'text-[var(--color-primary)]' : 'text-[var(--color-card)]'} />
                             </div>
-                            <span
-                                style={{
-                                    fontFamily: 'Poppins',
-                                    fontSize: '16px',
-                                    fontWeight: 400,
-                                    color: isActive ? '#333333' : '#FFFFFF',
-                                    textAlign: 'center',
-                                }}
-                            >
+                            <span className={`font-[family-name:var(--font-sans)] text-[16px] font-normal text-center ${isActive ? 'text-[var(--color-text-dark)]' : 'text-white'
+                                }`}>
                                 {item.name}
                             </span>
                         </Link>
@@ -101,18 +83,10 @@ export default function Sidebar() {
                 onClick={logout}
                 className="flex flex-col items-center justify-center mt-auto mb-4 group"
             >
-                <div className="w-[24px] h-[24px] flex items-center justify-center mb-1 text-[var(--figma-pink)] group-hover:text-white transition-colors">
+                <div className="w-[24px] h-[24px] flex items-center justify-center mb-1 text-[var(--color-primary)] group-hover:text-white transition-colors">
                     <LogOut size={24} />
                 </div>
-                <span
-                    style={{
-                        fontFamily: 'Poppins',
-                        fontSize: '16px',
-                        fontWeight: 400,
-                        color: '#FFFFFF',
-                        textAlign: 'center',
-                    }}
-                >
+                <span className="font-[family-name:var(--font-sans)] text-[16px] font-normal text-white text-center">
                     Logout
                 </span>
             </button>

@@ -8,9 +8,11 @@ interface MainLayoutProps {
 
 // Make this a client component so Sidebar (client) works correctly and
 // use responsive CSS to push main content to the right of the fixed sidebar.
+// Make this a client component so Sidebar (client) works correctly and
+// use responsive CSS to push main content to the right of the fixed sidebar.
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
-        <div className="min-h-screen" style={{ background: 'var(--figma-bg)' }}>
+        <div className="min-h-screen bg-[var(--color-background)]">
             <Sidebar />
             {/*
               Use Tailwind responsive margin: no left margin on small screens,
